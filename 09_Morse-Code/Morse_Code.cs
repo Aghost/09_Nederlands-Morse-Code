@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _09_Morse_Code
 {
     public static class MorseCode
     {
         public static readonly Dictionary<char, string> MorseDict;
+        public static readonly Dictionary<string, char> ReversedDict;
 
-        static Morse()
+        static MorseCode()
         {
             MorseDict = new Dictionary<char, string>
             {
@@ -31,37 +29,31 @@ namespace _09_Morse_Code
                 {'1', ".----" },    {'2', "..---" },    {'3', "...--" },
                 {'4', "....-" },    {'5', "....." },    {'6', "-...." },
                 {'7', "--..." },    {'8', "---.." },    {'9', "----." },
-                {'0', "-----" },    {' ', " " }
+                {'0', "-----" },    {' ', "_" }
             };
+
+            ReversedDict = MorseDict.ToDictionary(x => x.Value, x => x.Key);
         }
 
-        public static string ToMorse(string input)
+        public static string ToMorse(char character)
         {
-            var result = new StringBuilder();
-
-            foreach (char character in input)
+            if (MorseDict.ContainsKey(character))
             {
-                if (MorseDict.ContainsKey(character))
-                {
-                    result.Append(MorseDict[character]);
-                }
+                return MorseDict[character];
             }
-            return result.ToString();
+            else return "";
         }
 
-        public static string FromMorse(string input)
+        public static char FromMorse(string str)
         {
-            string[] inputArray = input.Split(' ');
-            var result = new StringBuilder();
-
-            foreach (string code in inputArray)
+            if (ReversedDict.ContainsKey(str))
             {
-                if (MorseDict.ContainsValue(code))
-                {
-                    result.Append(MorseDict);       // klopt nog niet
-                }
+                return ReversedDict[str];
             }
-            return result.ToString();
+            else
+            {
+                return '\0';
+            }
         }
 
     }

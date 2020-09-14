@@ -19,7 +19,32 @@ namespace _09_Morse_Code
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            TextBox.Text = MorseCode.ToMorse('a');
         }
+
+        private void Btn_ToMorse_Click(object sender, EventArgs e)
+        {
+            string buffer = TextBox.Text;
+            TextBox.Text = "";
+
+            foreach (char chr in buffer)
+            {
+                Console.Write(chr);
+                TextBox.Text += MorseCode.ToMorse(chr) + ' ';
+            }
+        }
+
+        private void Btn_FromMorse_Click(object sender, EventArgs e)
+        {
+            string buffer = TextBox.Text;
+            TextBox.Text = "";
+
+            foreach (string str in buffer.Split(' '))
+            {
+                TextBox.Text += MorseCode.FromMorse(str);
+            }
+            Console.WriteLine(TextBox.Text);
+        }
+
     }
 }
